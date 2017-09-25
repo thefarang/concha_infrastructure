@@ -1,0 +1,42 @@
+# @todo
+# Add in dependency indicators, so that concha_user etc will only start when the mongodb is ready
+# and the api_gateway will only start with the microservices are ready
+
+version: "3"
+
+volumes:
+  mongodata:
+
+services:
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+
+  concha_user:
+    image: thefarang/concha_user
+    # command: - npm start
+    ports:
+      - 3001:80
+    links:
+      - mongo
+
+  concha_auth:
+    image: thefarang/concha_auth
+    # command: - npm start
+    ports:
+      - 3002:80
+    links:
+      - mongo
+
+  concha_gateway_browser:
+    image: thefarang/concha_gateway_browser
+    # command: - npm start
+    ports:
+      - "3000:80"
+    links:
+      - concha_user
+      - concha_auth
