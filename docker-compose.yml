@@ -2,6 +2,9 @@
 # Add in dependency indicators, so that concha_user etc will only start when the mongodb is ready
 # and the api_gateway will only start with the microservices are ready
 
+# @todo
+# Implement this as dev/staging/production
+
 version: "3"
 
 volumes:
@@ -18,6 +21,7 @@ services:
 
   concha_user:
     image: thefarang/concha_user
+    # build: ../concha_user/
     # command: - npm start
     ports:
       - 3001:80
@@ -26,6 +30,7 @@ services:
 
   concha_auth:
     image: thefarang/concha_auth
+    # build: ../concha_auth/
     # command: - npm start
     ports:
       - 3002:80
@@ -34,6 +39,7 @@ services:
 
   concha_gateway_browser:
     image: thefarang/concha_gateway_browser
+    # build: ../concha_gateway_browser/
     # command: - npm start
     ports:
       - "3000:80"
